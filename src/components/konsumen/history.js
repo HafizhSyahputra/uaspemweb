@@ -8,8 +8,8 @@ function History({ transactions: propsTransactions, onPayment }) {
     if (storedTransactions) {
       setTransactions(JSON.parse(storedTransactions));
     }
-  }, []);
-
+  }, [propsTransactions]); // Add propsTransactions as a dependency
+  
   // Function to handle payment for a transaction
   const handlePayment = (transactionId) => {
     onPayment(transactionId); // Pass the transaction ID
@@ -19,11 +19,9 @@ function History({ transactions: propsTransactions, onPayment }) {
         : transaction
     );
     setTransactions(updatedTransactions);
+    localStorage.setItem("transactions", JSON.stringify(updatedTransactions)); // Store updated transactions in local storage
   };
-
-  const hasTransactionsWaitingForPayment = transactions.some(
-    (transaction) => transaction.status === "Waiting for Payment"
-  );
+  
 
   return (
     <div className="mt-16 pl-20 pr-20">
@@ -37,12 +35,8 @@ function History({ transactions: propsTransactions, onPayment }) {
             <th className="px-4 py-2">Quantity</th>
             <th className="px-4 py-2">Category</th>
             {transactions.some(transaction => transaction.price) && <th className="px-4 py-2">Price</th>}
-            {hasTransactionsWaitingForPayment && (
-              <React.Fragment>
-                <th className="px-4 py-2">Status</th>
-                <th className="px-4 py-2">Actions</th>
-              </React.Fragment>
-            )}
+            <th className="px-4 py-2">Status</th> 
+            <th className="px-4 py-2">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -52,19 +46,19 @@ function History({ transactions: propsTransactions, onPayment }) {
               <td className="border px-4 py-2">{transaction.quantity}</td>
               <td className="border px-4 py-2">{transaction.category}</td>
               {transaction.price && <td className="border px-4 py-2">{transaction.price}</td>}
+              <td className="border px-4 py-2">{transaction.status}</td>
               {transaction.status === "Waiting for Payment" && (
-                // Render payment button if status is "Waiting for Payment"
-                <React.Fragment>
-                  <td className="border px-4 py-2">{transaction.status}</td>
-                  <td className="border px-4 py-2">
-                    <button
-                      className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-                      onClick={() => handlePayment(transaction.id)}
-                    >
-                      Pay
-                    </button>
-                  </td>
-                </React.Fragment>
+                <td className="border px-4 py-2">
+                  <button
+                    className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                    onClick={() => handlePayment(transaction.id)}
+                  >
+                    Pay
+                  </button>
+                </td>
+              )}
+              {transaction.status === "Paid" && (
+                <td className="border px-4 py-2">Paid</td>
               )}
             </tr>
           ))}

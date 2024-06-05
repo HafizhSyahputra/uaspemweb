@@ -49,12 +49,18 @@ function App() {
   const handleUpdateGudang = (updatedGudangData) => {
     setGudang(updatedGudangData);
   };
+
   useEffect(() => {
-    const storedGudang = localStorage.getItem("gudangData");
+    const storedGudang = localStorage.getItem("gudang");
     if (storedGudang) {
       setGudang(JSON.parse(storedGudang));
+    } else {
+      // Tambahkan 5 data utama dari data.json ke localStorage
+      const initialData = data.gudang.slice(0, 3);
+      localStorage.setItem("gudang", JSON.stringify(initialData));
+      setGudang(initialData);
     }
-  }, []);
+  }, []); 
 
   useEffect(() => {
     localStorage.setItem("gudangData", JSON.stringify(gudang));
@@ -70,10 +76,8 @@ function App() {
     // For example, you can update the transaction status or perform any other necessary actions.
   };
 
-  const receiveStock = (transaction) => {
-    // Implement the logic for receiving stock from the supplier
-    // For example, you can update the gudang state with the new stock data
-    // or perform any other necessary actions.
+  const receiveStock = (newSupplier) => {
+    setSupplierData([...supplierData, newSupplier]);
   };
 
   const handleViewHistory = () => {
@@ -89,15 +93,11 @@ function App() {
     setTransactions((prevTransactions) => [...prevTransactions, transaction]);
   };
 
-  const updateTransactionStatus = (updatedTransaction) => {
-    setTransactions((prevTransactions) =>
-      prevTransactions.map((transaction) =>
-        transaction.id === updatedTransaction.id
-          ? updatedTransaction
-          : transaction
-      )
-    );
+  const updateTransactionStatus = (itemName, status) => {
+    // Lakukan pembaruan status transaksi sesuai kebutuhan
+    console.log(`Updating transaction status for item ${itemName} to ${status}`);
   };
+
   const handlePayment = (transactionId) => {
     const updatedTransactions = transactions.map((transaction) =>
       transaction.id === transactionId
@@ -233,6 +233,7 @@ function App() {
     }
   };
 
+
   // Handler functions
   const handlePlayerDelete = (role) => {
     setPlayerToDelete(role);
@@ -263,7 +264,11 @@ function App() {
     const updatedGudang = gudang.filter((item) => item.id !== id);
     setGudang(updatedGudang);
     setShowDeleteGudang(false);
+  
+    // Simpan data ke localStorage
+    localStorage.setItem("gudang", JSON.stringify(updatedGudang));
   };
+  
 
   const handleCancelDelete = () => {
     setShowDeletePlayer(false);
@@ -299,16 +304,20 @@ function App() {
   const editGudang = (updatedItem) => {
     const updatedGudang = gudang.map((item) => {
       if (item.id === updatedItem.id) {
-        // If ID matches, return a new object with updated values
+        // Jika ID cocok, kembalikan objek baru dengan nilai yang diperbarui
         return { ...item, ...updatedItem };
       } else {
         return item;
       }
     });
-    setGudang(updatedGudang); // Update the gudang state with the new array
+    setGudang(updatedGudang); // Perbarui state gudang dengan array baru
     setCurrentGudang(null);
     setShowEditGudang(false);
+  
+    // Simpan data ke localStorage
+    localStorage.setItem("gudang", JSON.stringify(updatedGudang));
   };
+  
 
   const handlePlayerCancelEdit = () => {
     setCurrentPlayer(null);
@@ -339,19 +348,23 @@ function App() {
   };
 
   const addGudang = (item) => {
-    // Temukan ID terbesar dalam daftar barang yang sudah ada
-    const maxId = Math.max(...gudang.map((item) => item.id), 0);
-    // Berikan ID baru dengan nilai ID terbesar + 1
-    item.id = maxId + 1;
-
     setGudang([...gudang, item]);
     setShowAddGudang(false);
-
-    // Menyimpan data ke localStorage
-    const gudangData = JSON.parse(localStorage.getItem("gudang")) || [];
-    const updatedData = [...gudangData, item];
+    const updatedData = [...gudang, item];
     localStorage.setItem("gudang", JSON.stringify(updatedData));
   };
+
+  useEffect(() => {
+    const storedGudang = localStorage.getItem("gudang");
+    if (storedGudang) {
+      setGudang(JSON.parse(storedGudang));
+    } else {
+      const initialData = data.gudang.slice(0, 5);
+      localStorage.setItem("gudang", JSON.stringify(initialData));
+      setGudang(initialData);
+    }
+  }, []);
+  
 
   const handlePlayerCancelAdd = () => {
     setShowAddPlayer(false);

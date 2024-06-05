@@ -5,24 +5,26 @@ const AddGudang = ({ addGudang, onCancel }) => {
   const [id, setid] = React.useState("");
   const [name, setname] = React.useState("");
   const [quantity, setquantity] = React.useState("");
+  const [category, setCategory] = React.useState(""); // State untuk kategori
 
   const handlenameChange = (e) => setname(e.target.value);
   const handlequantityChange = (e) => setquantity(e.target.value);
+  const handleCategoryChange = (e) => setCategory(e.target.value);
+  const handleIdChange = (e) => setid(e.target.value); // Handler perubahan id
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addGudang({ id, name, quantity });
+    addGudang({ id, name, quantity, category });
 
-    // Tambahkan data baru ke dalam array "gudang"
-    const newData = { id, name, quantity };
+    const newData = { id, name, quantity, category };
     data.gudang.push(newData);
 
-    // Simpan perubahan ke dalam data.json
     localStorage.setItem("data", JSON.stringify(data));
 
     setid("");
     setname("");
     setquantity("");
+    setCategory("");
   };
 
   return (
@@ -30,7 +32,16 @@ const AddGudang = ({ addGudang, onCancel }) => {
       <h2 className="text-3xl font-bold mb-6 text-center">Add Item</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">name:</label>
+          <label className="block text-gray-700 text-sm font-bold mb-2">ID:</label>
+          <input
+            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            value={id}
+            onChange={handleIdChange} // Menggunakan handler perubahan id
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">Name:</label>
           <input
             className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
@@ -39,13 +50,26 @@ const AddGudang = ({ addGudang, onCancel }) => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">quantity:</label>
+          <label className="block text-gray-700 text-sm font-bold mb-2">Quantity:</label>
           <input
             className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="number"
             value={quantity}
             onChange={handlequantityChange}
           />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">Category:</label>
+          <select
+            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            value={category}
+            onChange={handleCategoryChange}
+          >
+            <option value="">Select Category</option>
+            <option value="Baju">Baju</option>
+            <option value="Celana">Celana</option>
+            <option value="Aksesoris">Aksesoris</option>
+          </select>
         </div>
         <div className="flex items-center justify-between">
           <button

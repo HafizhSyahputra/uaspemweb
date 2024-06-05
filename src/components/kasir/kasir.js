@@ -47,23 +47,27 @@ function TransactionList({
       const selectedItemDetails = gudang.find(
         (item) => item.name === transaction.itemName
       );
-
-      if (selectedItemDetails && selectedItemDetails.quantity >= transaction.quantity) {
+  
+      if (
+        selectedItemDetails &&
+        selectedItemDetails.quantity >= transaction.quantity
+      ) {
         const updatedTransaction = {
           ...transaction,
-          status: "valid",
-          quantity: selectedItemDetails.quantity // Menambahkan quantity dari gudang ke dalam transaksi
+          status: "valid", // Perbarui status menjadi valid
+          quantity: selectedItemDetails.quantity, // Menambahkan quantity dari gudang ke dalam transaksi
         };
-        updateTransactionStatus(updatedTransaction); // 2. Memanggil fungsi updateTransactionStatus dengan transaksi yang diperbarui
+        updateTransactionStatus(updatedTransaction); // Memanggil fungsi updateTransactionStatus dengan transaksi yang diperbarui
       } else {
         console.log("Stok tidak mencukupi untuk transaksi ini.");
       }
-
+  
       sendToSupplier(transaction);
     } else {
       console.error("Gudang is undefined or null.");
     }
   };
+  
   return (
     <div className="transaction-list-container p-4 bg-gray-100 mt-20 rounded-lg shadow-md pr-10 pl-10">
       <h2 className="text-2xl font-bold mb-4 text-gray-700">

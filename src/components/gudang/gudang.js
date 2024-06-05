@@ -28,6 +28,9 @@ const Gudang = ({ gudang, onDelete, onEdit, onAdd }) => {
                 Kuantitas
               </th>
               <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                Kategori
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">
                 Actions
               </th>
             </tr>
@@ -43,6 +46,9 @@ const Gudang = ({ gudang, onDelete, onEdit, onAdd }) => {
                 </td>
                 <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
                   {item.quantity}
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
+                  {item.category}
                 </td>
                 <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
                   <button

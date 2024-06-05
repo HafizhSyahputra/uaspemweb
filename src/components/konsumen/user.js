@@ -3,8 +3,7 @@ import History from "./history";
 import data from "../../data/data.json";
 import Gudang from "../gudang/gudang";
 
-function User({ categories }) {
-  const [gudang, setGudang] = useState(Array.isArray(data.gudang) ? data.gudang : []);
+function User({ gudang, categories }) {
   const [selectedItem, setSelectedItem] = useState(null);
   const [quantity, setQuantity] = useState("");
   const [transactions, setTransactions] = useState([]);

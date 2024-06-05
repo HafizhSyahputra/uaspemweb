@@ -11,19 +11,6 @@ const PlayerList = ({ players, onDelete, onEdit, onAdd, onViewGudang, onViewHist
         >
           View Gudang Stock
         </button>
-        
-      <button
-          className="bg-gray-800 hover:bg-gray-500 text-white font-semibold py-3 px-6 rounded transition duration-300 ease-in-out transform hover:scale-105"
-          onClick={onViewSupplier}
-        >
-          View Supplier 
-        </button>
-      <button
-          className="bg-gray-800 hover:bg-gray-500 text-white font-semibold py-3 px-6 rounded transition duration-300 ease-in-out transform hover:scale-105"
-          onClick={onViewHistory}
-        >
-          View Transaksi History 
-        </button>
         </div>
       <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Data User</h2>
 
@@ -85,7 +72,7 @@ const PlayerList = ({ players, onDelete, onEdit, onAdd, onViewGudang, onViewHist
           Add New Player
         </button>
       </div>
-
+            <History />
     </div>
   );
 };

@@ -4,9 +4,11 @@ const EditGudang = ({ item, editGudang, onCancel }) => {
   const [id, setId] = useState(item.id);
   const [name, setName] = useState(item.name);
   const [quantity, setQuantity] = useState(item.quantity);
+  const [category, setCategory] = useState(item.category); // Menambah state untuk kategori
 
   const handleNameChange = (e) => setName(e.target.value);
   const handleQuantityChange = (e) => setQuantity(e.target.value);
+  const handleCategoryChange = (e) => setCategory(e.target.value); // Handler perubahan kategori
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -14,6 +16,7 @@ const EditGudang = ({ item, editGudang, onCancel }) => {
       id,
       name,
       quantity,
+      category, // Menyertakan kategori dalam data yang akan diupdate
     };
     editGudang(updatedGudang);
   };
@@ -39,6 +42,16 @@ const EditGudang = ({ item, editGudang, onCancel }) => {
             id="quantity"
             value={quantity}
             onChange={handleQuantityChange}
+            className="form-control"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="category">Category:</label>
+          <input
+            type="text"
+            id="category"
+            value={category}
+            onChange={handleCategoryChange}
             className="form-control"
           />
         </div>
