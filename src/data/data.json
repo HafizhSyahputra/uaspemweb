@@ -1,0 +1,57 @@
+{
+  "players": [
+    {
+      "id":1,
+      "username": "user",
+      "password": "user",
+      "role": "user"
+    },
+    {
+      "id":2,
+      "username": "admin",
+      "password": "admin",
+      "role": "admin"
+    },
+    {
+      "id":3,
+      "username": "gudang",
+      "password": "gudang",
+      "role": "gudang"
+    },
+    {
+      "id":4,
+      "username": "supplier",
+      "password": "supplier",
+      "role": "supplier"
+    },
+    {
+      "id":5,
+      "username": "kasir",
+      "password": "kasir",
+      "role": "kasir"
+    }
+  ],
+  "gudang": [
+    {
+      "id": 1,
+      "name": "Polo Shirt",
+      "quantity": 10,
+      "category":"baju"
+    },
+    {
+      "id": 2,
+      "name": "Celana Cargo",
+      "quantity": 5,
+      "category":"celana"
+    },
+    {
+      "id": 3,
+      "name": "Topi",
+      "quantity": 20,
+      "category":"Aksesoris"
+    }
+  ],
+  "transaksi": [
+    
+  ]
+}
